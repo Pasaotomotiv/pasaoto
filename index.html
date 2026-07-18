@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paşa Oto Bornova | İzmir Motor Revizyonu ve Periyodik Bakım Servisi</title>
+    <style>
+        /* --- DİNAMİK RENK PALETİ VE DEĞİŞKENLER --- */
+        :root {
+            --ana-kirmizi: #E53935;
+            --koyu-kirmizi: #B71C1C;
+            --arka-siyah: #0F0F11;
+            --koyu-gri: #1A1A1E;
+            --orta-gri: #2D2D35;
+            --acik-gri: #F8F9FA;
+            --yazi-koyu: #212529;
+            --yazi-acik: #E0E0E0;
+            --beyaz: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--acik-gri);
+            color: var(--yazi-koyu);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- MODERN SABİT NAVİGASYON (HEADER) --- */
+        header {
+            background-color: var(--arka-siyah);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 3px solid var(--ana-kirmizi);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .logo-alani img {
+            height: 55px;
+            width: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-alani img:hover {
+            transform: scale(1.03);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            color: var(--beyaz);
+            text-decoration: none;
+            padding: 10px 16px;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--beyaz);
+            background-color: var(--ana-kirmizi);
+        }
+
+        /* --- SINIFININ EN İYİSİ METİN OKUNABİLİRLİKLİ SLIDER --- */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            margin-top: 82px;
+            overflow: hidden;
+            background-color: var(--arka-siyah);
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Karartma filtresi okunabilirliği %100 yapar */
+            filter: brightness(35%) contrast(110%);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 10;
+            max-width: 850px;
+            color: var(--beyaz);
+        }
+
+        .slide-content h2 {
+            font-size: clamp(28px, 5vw, 46px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            border-left: 6px solid var(--ana-kirmizi);
+            padding-left: 18px;
+            line-height: 1.2;
+        }
+
+        .slide-content p {
+            font-size: clamp(16px, 2vw, 20px);
+            margin-bottom: 30px;
+            color: var(--yazi-acik);
+            font-weight: 400;
+            max-width: 650px;
+        }
+
+        /* --- GÜVEN VEREN HİZMET AVANTAJLARI (USP) --- */
+        .avantajlar {
+            padding: 70px 0;
+            background-color: var(--beyaz);
+            text-align: center;
+        }
+
+        .section-baslik {
+            font-size: 32px;
+            color: var(--arka-siyah);
+            margin-bottom: 45px;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .section-baslik::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 5px;
+            background-color: var(--ana-kirmizi);
+            margin: 12px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .kart-izgara {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .kart {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--acik-gri);
+            padding: 40px 30px;
+            border-radius: 8px;
+            border-top: 5px solid var(--koyu-gri);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .kart:hover {
+            transform: translateY(-6px);
+            border-top-color: var(--ana-kirmizi);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        }
+
+        .kart h3 {
+            font-size: 21px;
+            margin-bottom: 15px;
+            color: var(--arka-siyah);
+            font-weight: 700;
+        }
+
+        .kart p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+        }
+
+        /* --- ULTRA AÇIKLAYICI GÖRSEL GALERİ BÖLÜMÜ --- */
+        .hizmetler-galeri {
+            padding: 70px 0;
+            background-color: var(--koyu-gri);
+        }
+
+        .hizmetler-galeri .section-baslik {
+            color: var(--beyaz);
+        }
+
+        .galeri-izgara {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .galeri-ogesi {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 320px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .galeri-ogesi img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .galeri-ogesi:hover img {
+            transform: scale(1.08);
+        }
+
+        .galeri-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+            padding: 30px 24px;
+            color: var(--beyaz);
+        }
+
+        .galeri-overlay h4 {
+            font-size: 22px;
+            color: var(--ana-kirmizi);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .galeri-overlay p {
+            font-size: 14px;
+            color: #E0E0E0;
+        }
+
+        /* --- SANAYİ DİLİNE UYGUN MİSYON & MİSYON --- */
+        .vizyon-misyon {
+            padding: 80px 0;
+            background-color: var(--beyaz);
+        }
+
+        .vm-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .vm-yazilar {
+            flex: 1.2;
+            min-width: 320px;
+        }
+
+        .vm-blok {
+            margin-bottom: 40px;
+        }
+
+        .vm-blok:last-child {
+            margin-bottom: 0;
+        }
+
+        .vm-blok h3 {
+            font-size: 24px;
+            color: var(--arka-siyah);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .vm-blok h3::before {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background-color: var(--ana-kirmizi);
+            border-radius: 3px;
+            transform: rotate(45deg);
+        }
+
+        .vm-blok p {
+            font-size: 16px;
+            color: #4A4A4A;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .vm-logo-konteyner {
+            flex: 0.8;
+            min-width: 280px;
+            text-align: center;
+        }
+
+        .vm-logo-konteyner img {
+            max-width: 260px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0px 8px 20px rgba(0,0,0,0.1));
+        }
+
+        /* --- HIZLI EYLEM ODAKLI İLETİŞİM ALANI --- */
+        .iletisim-alani {
+            padding: 70px 0;
+            background-color: var(--acik-gri);
+            border-top: 1px solid #EAEAEA;
+        }
+
+        .iletisim-wrapper {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .iletisim-bilgi {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .iletisim-bilgi h3 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: var(--arka-siyah);
+            font-weight: 800;
+        }
+
+        .adres-metni {
+            background-color: var(--beyaz);
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid var(--ana-kirmizi);
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .adres-metni p {
+            font-size: 15px;
+            color: #333333;
+            font-weight: 600;
+        }
+
+        .calisma-saatleri {
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .calisma-saatleri span {
+            color: var(--ana-kirmizi);
+            font-weight: 700;
+        }
+
+        /* Yüksek Etkileşimli CTA Butonları */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            font-size: 17px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            transition: all 0.25s ease;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: var(--beyaz);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1BD742;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-telefon {
+            background-color: var(--arka-siyah);
+            color: var(--beyaz);
+        }
+
+        .btn-telefon:hover {
+            background-color: #1F1F24;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Harita Blok Tasarımı */
+        .harita-konteyner {
+            flex: 1;
+            min-width: 320px;
+            height: 440px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            border: 3px solid var(--orta-gri);
+        }
+
+        .harita-konteyner iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: 0;
+        }
+
+        /* --- KURUMSAL FOOTER VE DEMIRIDERS İMZASI --- */
+        footer {
+            background-color: var(--arka-siyah);
+            color: #888888;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+            border-top: 4px solid var(--ana-kirmizi);
+        }
+
+        footer p {
+            margin-bottom: 6px;
+        }
+
+        footer strong {
+            color: var(--beyaz);
+        }
+
+        .tasarimci-imza {
+            font-size: 12px;
+            color: #555555;
+            margin-top: 8px;
+        }
+
+        .tasarimci-imza a {
+            color: var(--ana-kirmizi);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* --- MOBİL CİHAZ YENİDEN DÜZENLEME (RESPONSIVE) --- */
+        @media (max-width: 768px) {
+            .header-wrapper {
+                flex-direction: column;
+                gap: 16px;
+                padding: 15px 0;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+            nav ul li a {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            .slider-container {
+                height: 55vh;
+                margin-top: 125px;
+            }
+            .slide-content h2 {
+                padding-left: 12px;
+            }
+            .kart-izgara {
+                flex-direction: column;
+            }
+            .vm-wrapper {
+                flex-direction: column-reverse;
+                gap: 40px;
+            }
+            .harita-konteyner {
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY HEADER AREA -->
+    <header>
+        <div class="container header-wrapper">
+            <div class="logo-alani">
+                <img src="pasaotologo.jpg" alt="Paşa Oto Bornova Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#anasayfa">Ana Sayfa</a></li>
+                    <li><a href="#neden-biz">Neden Biz?</a></li>
+                    <li><a href="#hizmetler">Yaptığımız İşler</a></li>
+                    <li><a href="#kurumsal">Hakkımızda</a></li>
+                    <li><a href="#iletisim">İletişim & Yol Tarifi</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- KESİNTİSİZ AKAN SLIDER ALANI -->
+    <section id="anasayfa" class="slider-container">
+        <!-- Slayt 1: Motor Revizyonu -->
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&q=80&w=1600" alt="Paşa Oto Bornova Motor Yenileme">
+            <div class="container slide-content">
+                <h2>Garantili Motor Revizyonu</h2>
+                <p>Yetkili servis kalitesinde motor rektifiye ve revizyon işlemlerini, doğrudan ustanızla muhatap olacağınız şeffaf bir süreçle sunuyoruz.</p>
+            </div>
+        </div>
+        <!-- Slayt 2: Periyodik Bakım -->
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?auto=format&fit=crop&q=80&w=1600" alt="Paşa Oto Periyodik Bakım Hizmeti">
+            <div class="container slide-content">
+                <h2>Eksiksiz Periyodik Bakım</h2>
+                <p>Yağ, filtre, fren ve tüm sıvı kontrolleri orijinal onaylı yedek parçalarla ve teknolojik arıza tespit altyapısıyla gerçekleştirilir.</p>
+            </div>
+        </div>
+        <!-- Slayt 3: Fiyat & Kalite Dengesi -->
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?auto=format&fit=crop&q=80&w=1600" alt="Paşa Oto Uygun Fiyatlı Yetkili Servis Kalitesi">
+            <div class="container slide-content">
+                <h2>Yetkili Servis Hizmeti, Sanayi Fiyatları</h2>
+                <p>Yeni nesil bilgisayarlı arıza teşhisinden mekanik onarıma kadar tüm işlemleri, yetkili servis maliyetlerinin çok daha altına çözün.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEDEN BİZ (USP KARTLARI) -->
+    <section id="neden-biz" class="avantajlar">
+        <div class="container">
+            <h2 class="section-baslik">Neden Paşa Oto'yu Seçmelisiniz?</h2>
+            <div class="kart-izgara">
+                <div class="kart">
+                    <h3>Doğrudan Usta İle Muhataplık</h3>
+                    <p>Müşteri danışmanları veya aracı süreçlerle vakit kaybetmeyin. Aracınızın arızasını doğrudan işlemi yapacak ustadan dinleyin ve şeffaf bilgi alın.</p>
+                </div>
+                <div class="kart">
+                    <h3>Cazip Fiyat Avantajı</h3>
+                    <p>Yetkili servislerin fahiş operasyonel giderlerini faturalarınızda ödemeyin. Hak ettiğiniz kaliteli işçiliğe ve orijinal parçaya doğru fiyatla ulaşın.</p>
+                </div>
+                <div class="kart">
+                    <h3>Komple Servis Çözümleri</h3>
+                    <p>Motor revizyonundan periyodik bakıma, alt takımdan bilgisayarlı diagnostik testlere kadar aracınızın ihtiyacı olan her işlem tek çatı altında.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- %100 ANLAŞILIR GÖRSEL ODAKLI GALERİ -->
+    <section id="hizmetler" class="hizmetler-galeri">
+        <div class="container">
+            <h2 class="section-baslik">Neler Yapıyoruz?</h2>
+            <div class="galeri-izgara">
+                <div class="galeri-ogesi">
+                    <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80&w=800" alt="Motor Mekanik Onarım">
+                    <div class="galeri-overlay">
+                        <h4>Motor Mekanik & Revizyon</h4>
+                        <p>Performans kaybı yaşayan veya rektifiye gerektiren motorları kusursuz işçilikle ilk günkü sağlığına kavuşturuyoruz.</p>
+                    </div>
+                </div>
+                <div class="galeri-ogesi">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800" alt="Yağ ve Filtre Değişimi">
+                    <div class="galeri-overlay">
+                        <h4>Periyodik Bakım</h4>
+                        <p>Motor ömrünü uzatan yağ değişimi, filtre yenileme ve güvenlik kontrollerini titizlikle tamamlıyoruz.</p>
+                    </div>
+                </div>
+                <div class="galeri-ogesi">
+                    <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=800" alt="Arıza Tespit Cihazı Uygulaması">
+                    <div class="galeri-overlay">
+                        <h4>Bilgisayarlı Arıza Teşhisi</h4>
+                        <p>Modern test cihazlarımızla aracınızın beynindeki tüm elektriksel ve mekanik hataları nokta atışı tespit ediyoruz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONSEPT DİLİNE UYGUN HAKKIMIZDA ALANI -->
+    <section id="kurumsal" class="vizyon-misyon">
+        <div class="container vm-wrapper">
+            <div class="vm-yazilar">
+                <div class="vm-blok">
+                    <h3>Misyonumuz</h3>
+                    <p>Yetkili servis kalitesindeki motor revizyonu ve periyodik bakım hizmetlerini, doğrudan ustanızla muhatap olabildiğiniz şeffaf bir süreçle ve cebinizi yormayan cazip fiyatlarla Bornova'da sunmaktır.</p>
+                </div>
+                <div class="vm-blok">
+                    <h3>Vizyonumuz</h3>
+                    <p>İzmir'deki tüm araç sahiplerinin, "sanayide güvenilir bir yerim var" diyebileceği ilk ve tek adres olmak; yüksek teknolojik altyapıyı esnaf samimiyeti ve dürüstlüğüyle birleştirmektir.</p>
+                </div>
+            </div>
+            <div class="vm-logo-konteyner">
+                <img src="pasaotologo.jpg" alt="Paşa Oto Bornova Kurumsal Güven Logosu">
+            </div>
+        </div>
+    </section>
+
+    <!-- KUSURSUZ DÖNÜŞÜM SAĞLAYAN İLETİŞİM VE HARİTA BÖLÜMÜ -->
+    <section id="iletisim" class="iletisim-alani">
+        <div class="container iletisim-wrapper">
+            <div class="iletisim-bilgi">
+                <h3>Kolayca Ulaşın ve Randevu Alın</h3>
+                
+                <!-- Kullanıcının talep ettiği metin tabanlı açık adres bloğu -->
+                <div class="adres-metni">
+                    <p>📍 Adresimiz:<br>Kemalpaşa Mah. 7419/11 Sk. No:134 Bornova / İZMİR</p>
+                </div>
+
+                <div class="calisma-saatleri">
+                    <p>🗓 Pazartesi - Cumartesi: <span>08:30 - 19:00</span> | Pazar: <span>Kapalı</span></p>
+                </div>
+                
+                <!-- Doğrudan Doğrulanmış WhatsApp API Yönlendirmesi -->
+                <a href="https://wa.me/905367909767?text=Merhaba%2C%20ara%C3%A7%20bak%C4%B1m%C4%B1%20ve%20motor%20revizyonu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="btn btn-whatsapp" target="_blank">
+                    💬 Tek Tıkla WhatsApp'tan İletişime Geçin
+                </a>
+                
+                <!-- Tıklanabilir Mobil Arama Butonu -->
+                <a href="tel:+905367909767" class="btn btn-telefon">
+                    📞 Ustayı Doğrudan Ara: +90 536 790 97 67
+                </a>
+            </div>
+            
+            <!-- Kullanıcının tescilli ve doğrulanmış Google Maps Iframe Entegrasyonu -->
+            <div class="harita-konteyner">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10511.199691685384!2d27.275920563914948!3d38.441506719301096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b97baae72252fd%3A0x154aafc16b00da72!2sPa%C5%9Fa%20otomativ!5e0!3m2!1str!2str!4v1784412758642!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER VE GELİŞTİRİCİ İMZASI -->
+    <footer>
+        <p>&copy; 2026 <strong>Paşa Oto Bornova</strong> - Tüm Hakları Saklıdır.</p>
+        <div class="tasarimci-imza">Tasarım ve Geliştirme: <a href="#" target="_blank">demiriders</a></div>
+    </footer>
+
+    <!-- SÜREKLİ GÖRSEL AKIŞINI YÖNETEN JAVASCRIPT -->
+    <script>
+        let slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const slideInterval = setInterval(nextSlide, 5000); 
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+    </script>
+</body>
+</html>
